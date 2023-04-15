@@ -8,17 +8,38 @@
     <artifactId>lombok-enums-component</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
+    <developers>
+        <developer>
+            <name>hyuga</name>
+            <email>hyuga0410@gmail.com</email>
+            <organization>https://github.com/hyuga0410/lombok-enums-component</organization>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git@github.com:hyuga0410/lombok-enums-component.git</connection>
+        <developerConnection>scm:git@github.com:hyuga0410/lombok-enums-component.git</developerConnection>
+        <url>git@github.com:hyuga0410/lombok-enums-component.git</url>
+    </scm>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
     <build>
         <plugins>
             <plugin>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.1</version>
+                <version>3.2.1</version>
                 <configuration>
                     <attach>true</attach>
                 </configuration>
@@ -37,8 +58,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>16</source>
-                    <target>16</target>
+                    <source>17</source>
+                    <target>17</target>
                     <!-- 由于本项目只是单纯提供注解处理器的功能，需要禁用项目本身编译时使用注解处理器，否则会编译失败 -->
                     <proc>none</proc>
                     <fork>true</fork>
@@ -56,5 +77,16 @@
             </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>sonatype</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>sonatype</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
 </project>
