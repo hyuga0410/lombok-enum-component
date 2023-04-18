@@ -1,15 +1,17 @@
-package cn.hyuga.lombok.enums.processor;
+package io.github.hyuga0410.lombok.enums.processor;
 
-import cn.hyuga.lombok.enums.annotations.EnumDesc;
 import com.sun.source.tree.Tree;
 import com.sun.tools.javac.code.Attribute;
 import com.sun.tools.javac.code.Flags;
+import com.sun.tools.javac.code.Symbol;
 import com.sun.tools.javac.code.TypeTag;
 import com.sun.tools.javac.tree.JCTree;
 import com.sun.tools.javac.tree.TreeTranslator;
 import com.sun.tools.javac.util.List;
 import com.sun.tools.javac.util.ListBuffer;
 import com.sun.tools.javac.util.Name;
+import com.sun.tools.javac.util.Pair;
+import io.github.hyuga0410.lombok.enums.annotations.EnumDesc;
 
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.Element;
@@ -20,7 +22,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import static cn.hyuga.lombok.enums.constants.EnumConstants.DESC;
+import static io.github.hyuga0410.lombok.enums.constants.EnumConstants.DESC;
 
 /**
  * 枚举描述方法生成处理
@@ -72,8 +74,13 @@ public class EnumDescProcessor extends AgentProcessor {
                     annotations.forEach(annotation -> {
                         // JCTree.JCExpression lhs = ((JCTree.JCAssign) annotation.getArguments().get(0)).lhs;
                         // JCTree.JCExpression rhs = ((JCTree.JCAssign) annotation.getArguments().get(0)).rhs;
-                        for (Attribute value : ((Attribute.Array) annotation.attribute.values.get(0).snd).values) {
-                            waitCreateMethodAttrs.add(value.getValue().toString());
+                        List<Pair<Symbol.MethodSymbol, Attribute>> values = annotation.attribute.values;
+                        if (null == values || values.size() == 0) {
+                            waitCreateMethodAttrs.add(DESC);
+                        } else {
+                            for (Attribute value : ((Attribute.Array) values.get(0).snd).values) {
+                                waitCreateMethodAttrs.add(value.getValue().toString());
+                            }
                         }
                     });
                 }

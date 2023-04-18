@@ -1,4 +1,4 @@
-package cn.hyuga.lombok.enums.parent;
+package io.github.hyuga0410.lombok.enums.parent;
 
 /**
  * 字节码处理使用

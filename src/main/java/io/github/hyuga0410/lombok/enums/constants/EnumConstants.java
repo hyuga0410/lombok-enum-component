@@ -1,4 +1,4 @@
-package cn.hyuga.lombok.enums.constants;
+package io.github.hyuga0410.lombok.enums.constants;
 
 /**
  * EnumConstants

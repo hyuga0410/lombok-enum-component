@@ -1,6 +1,6 @@
-package cn.hyuga.lombok.enums.processor;
+package io.github.hyuga0410.lombok.enums.processor;
 
-import cn.hyuga.lombok.enums.constants.EnumConstants;
+import io.github.hyuga0410.lombok.enums.constants.EnumConstants;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.ProcessingEnvironment;

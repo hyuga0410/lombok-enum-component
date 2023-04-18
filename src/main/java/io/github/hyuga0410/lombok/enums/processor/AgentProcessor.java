@@ -1,14 +1,14 @@
-package cn.hyuga.lombok.enums.processor;
+package io.github.hyuga0410.lombok.enums.processor;
 
-import cn.hyuga.lombok.enums.annotations.EnumDesc;
-import cn.hyuga.lombok.enums.constants.EnumConstants;
-import cn.hyuga.lombok.enums.parent.Parent;
 import com.sun.tools.javac.api.JavacTrees;
 import com.sun.tools.javac.code.Type;
 import com.sun.tools.javac.tree.JCTree;
 import com.sun.tools.javac.tree.TreeMaker;
 import com.sun.tools.javac.util.Context;
 import com.sun.tools.javac.util.Names;
+import io.github.hyuga0410.lombok.enums.annotations.EnumDesc;
+import io.github.hyuga0410.lombok.enums.constants.EnumConstants;
+import io.github.hyuga0410.lombok.enums.parent.Parent;
 import sun.misc.Unsafe;
 
 import javax.annotation.processing.AbstractProcessor;

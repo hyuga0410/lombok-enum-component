@@ -1,4 +1,4 @@
-package cn.hyuga.lombok.enums.annotations;
+package io.github.hyuga0410.lombok.enums.annotations;
 
 import java.lang.annotation.*;
 
