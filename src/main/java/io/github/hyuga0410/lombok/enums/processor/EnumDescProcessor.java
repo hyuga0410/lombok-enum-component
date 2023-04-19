@@ -72,8 +72,6 @@ public class EnumDescProcessor extends AgentProcessor {
                     waitCreateMethodAttrs.add(DESC);
                 } else {
                     annotations.forEach(annotation -> {
-                        // JCTree.JCExpression lhs = ((JCTree.JCAssign) annotation.getArguments().get(0)).lhs;
-                        // JCTree.JCExpression rhs = ((JCTree.JCAssign) annotation.getArguments().get(0)).rhs;
                         List<Pair<Symbol.MethodSymbol, Attribute>> values = annotation.attribute.values;
                         if (null == values || values.size() == 0) {
                             waitCreateMethodAttrs.add(DESC);
