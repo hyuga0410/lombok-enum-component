@@ -20,7 +20,7 @@ public class AnnotationProcessor extends AbstractProcessor {
 
     private static final List<AgentProcessor> PROCESSORS = new ArrayList<>();
 
-    private static final String META_INF_PATH = "/META-INF/services/cn.hyuga.lombok.Processors";
+    private static final String META_INF_PATH = "/META-INF/services/io.github.hyuga0410.lombok.Processors";
 
     static {
         try {
