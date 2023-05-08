@@ -1,7 +1,5 @@
 package io.github.hyuga0410.lombok.enums.processor;
 
-import io.github.hyuga0410.lombok.enums.constants.EnumConstants;
-
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.TypeElement;
@@ -85,6 +83,8 @@ public class AnnotationProcessor extends AbstractProcessor {
     }
 
     /**
+     * 需要处理的注解类型
+     * <p>
      * 如果处理器类用{@link SupportedAnnotationTypes}注释，则返回一个不可修改的集合，其字符串集与注释相同。如果类没有如此注释，则返回一个空集。
      * <p>
      * 如果{@linkplain ProcessingEnvironment#getSourceVersion()}不支持模块，
@@ -100,19 +100,6 @@ public class AnnotationProcessor extends AbstractProcessor {
             set.addAll(processor.getSupportedAnnotationTypes());
         }
         return set;
-    }
-
-    /**
-     * 如果处理器类用{@link SupportedSourceVersion}注释，请在注释中返回源版本。如果类没有如此注释，则返回{@link SourceVersion#RELEASE_6}。
-     *
-     * @return 该处理器支持的最新源版本
-     */
-    @Override
-    public SourceVersion getSupportedSourceVersion() {
-        if (EnumConstants.VERSION == EnumConstants.JDK_17) {
-            return SourceVersion.valueOf(EnumConstants.RELEASE_17);
-        }
-        return SourceVersion.valueOf(EnumConstants.RELEASE_11);
     }
 
 }
