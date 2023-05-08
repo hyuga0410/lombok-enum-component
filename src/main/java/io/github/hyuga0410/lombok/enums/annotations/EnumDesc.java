@@ -1,5 +1,7 @@
 package io.github.hyuga0410.lombok.enums.annotations;
 
+import io.github.hyuga0410.lombok.enums.constants.EnumConstants;
+
 import java.lang.annotation.*;
 
 /**
@@ -11,9 +13,8 @@ import java.lang.annotation.*;
 @Documented
 @Target({ElementType.TYPE, ElementType.FIELD})
 @Retention(RetentionPolicy.SOURCE)
+@SuppressWarnings("unused")
 public @interface EnumDesc {
-
-    String DESC = "desc";
 
     /**
      * 注意： <br>
@@ -24,6 +25,6 @@ public @interface EnumDesc {
      *
      * @return String[]
      */
-    String[] attributes() default {DESC};
+    String[] attributes() default {EnumConstants.DESC};
 
 }

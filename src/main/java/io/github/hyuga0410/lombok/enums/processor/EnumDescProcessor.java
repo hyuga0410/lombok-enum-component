@@ -33,10 +33,21 @@ import static io.github.hyuga0410.lombok.enums.constants.EnumConstants.DESC;
 public class EnumDescProcessor extends AgentProcessor {
 
     /**
-     * 处理实现
+     * 处理来自上一轮的类型元素的一组注释接口，并返回此处理器是否声称这些注释接口。
+     * <p>
+     * 如果返回true，则声明注释接口，后续处理器将不会被要求处理它们；
+     * <p>
+     * 如果返回false，注释接口将无人认领，随后的处理器可能会被要求处理它们。处理器可能始终返回相同的布尔值，或者可能根据自己选择的标准改变结果。
+     * <p>
+     * 如果处理器支持“x”，并且根元素没有注释，则输入集将是空的。处理器必须优雅地处理一组空的注释。
+     *
+     * @param annotations 请求处理的注释接口
+     * @param roundEnv    有关当前和上一轮的信息的环境
+     * @return boolean
      */
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+        // 获取环境中注释的@EnumDesc元素
         Set<? extends Element> enumDescList = roundEnv.getElementsAnnotatedWith(EnumDesc.class);
 
         // 字段处理
@@ -112,22 +123,27 @@ public class EnumDescProcessor extends AgentProcessor {
 
     /**
      * 核心方法 字段的处理逻辑
+     *
+     * @param element 表示程序元素，如模块、包、类或方法。每个元素代表一个编译时语言级构造（而不是虚拟机的运行时构造）
      */
     private void handleField(Element element) {
+        // 获取程序元素的JCTree[抽象语法树节点的根类。它为特定树节点提供了定义，作为嵌套在里面的子类。]
         JCTree tree = javacTrees.getTree(element);
+        // Visit this tree with a given visitor.
         tree.accept(new TreeTranslator() {
-
             @Override
             public void visitVarDef(JCTree.JCVariableDecl tree) {
+                // 获取元素JCTree的JCModifiers修饰符
                 JCTree.JCModifiers modifiers = tree.getModifiers();
+                // 获取modifiers的注解集合
                 List<JCTree.JCAnnotation> annotations = modifiers.getAnnotations();
                 if (annotations == null) {
                     return;
                 }
+
                 JCTree clazzTree = javacTrees.getTree(element.getEnclosingElement());
 
                 for (JCTree.JCAnnotation annotation : annotations) {
-
                     // 找到注解
                     if (jcEquals(annotation)) {
                         Set<String> nameSet = getMethodNameSuffixSet(annotation);

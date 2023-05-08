@@ -33,10 +33,31 @@ import java.util.Set;
  */
 public abstract class AgentProcessor extends AbstractProcessor {
 
+    /**
+     * 提供tree的实现。
+     * 这不是任何受支持的API的一部分。如果您编写的代码依赖于此，那么您将自担风险。本代码及其内部接口可随时更改或删除，恕不另行通知。
+     */
     protected JavacTrees javacTrees;
+    /**
+     * tree的工厂类。
+     * 这不是任何受支持的API的一部分。如果您编写的代码依赖于此，那么您将自担风险。本代码及其内部接口可随时更改或删除，恕不另行通知。
+     */
     protected TreeMaker treeMaker;
+    /**
+     * 访问编译器的名称表。定义了标准名称，以及创建新名称的方法。
+     * <p>
+     * 这不是任何受支持的API的一部分。如果您编写依赖于此的代码，您将自行承担风险。此代码及其内部接口如有更改或删除，恕不另行通知。
+     */
     protected Names names;
 
+    /**
+     * 通过将{@code processingEnv}字段设置为{@code processingEnv}参数的值，用处理环境初始化处理器。
+     * <p>
+     * 如果在同一对象上多次调用此方法，将抛出{@code IllegalStateException}。
+     *
+     * @param processingEnv 访问工具框架提供给处理器的设施的环境
+     * @throws IllegalStateException 如果此方法被多次调用。
+     */
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
@@ -67,7 +88,6 @@ public abstract class AgentProcessor extends AbstractProcessor {
         }
         return SourceVersion.valueOf(EnumConstants.RELEASE_11);
     }
-
 
     /**
      * 需要处理的注解类型
@@ -185,7 +205,6 @@ public abstract class AgentProcessor extends AbstractProcessor {
      * 获取JDK编译模块
      */
     public static Object getJdkCompilerModule() {
-
         try {
             Class<?> cModuleLayer = Class.forName("java.lang.ModuleLayer");
             Method mBoot = cModuleLayer.getDeclaredMethod("boot");
