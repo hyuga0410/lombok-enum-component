@@ -11,8 +11,7 @@ import io.github.hyuga0410.lombok.enums.constants.EnumConstants;
 import io.github.hyuga0410.lombok.enums.parent.Parent;
 import sun.misc.Unsafe;
 
-import javax.annotation.processing.AbstractProcessor;
-import javax.annotation.processing.ProcessingEnvironment;
+import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -79,7 +78,9 @@ public abstract class AgentProcessor extends AbstractProcessor {
     }
 
     /**
-     * jdk版本17
+     * 如果处理器类用{@link SupportedSourceVersion}注释，请在注释中返回源版本。如果类没有如此注释，则返回{@link SourceVersion#RELEASE_6}。
+     *
+     * @return 该处理器支持的最新源版本
      */
     @Override
     public SourceVersion getSupportedSourceVersion() {
@@ -91,6 +92,14 @@ public abstract class AgentProcessor extends AbstractProcessor {
 
     /**
      * 需要处理的注解类型
+     * <p>
+     * 如果处理器类用{@link SupportedAnnotationTypes}注释，则返回一个不可修改的集合，其字符串集与注释相同。如果类没有如此注释，则返回一个空集。
+     * <p>
+     * 如果{@linkplain ProcessingEnvironment#getSourceVersion()}不支持模块，
+     * 换句话说，如果它小于或等于{@link SourceVersion#RELEASE_8 RELEASE_8}，
+     * 那么任何前导的{@linkplain Processor#getSupportedAnnotationTypes()}都会从名称中删除。
+     *
+     * @return 此处理器支持的注释接口的名称，如果没有，则为空集.
      */
     @Override
     public Set<String> getSupportedAnnotationTypes() {
@@ -98,9 +107,15 @@ public abstract class AgentProcessor extends AbstractProcessor {
     }
 
     /**
-     * 需要处理的注解集合
+     * 需要处理的注解类型
+     * <p>
+     * 如果处理器类用{@link SupportedAnnotationTypes}注释，则返回一个不可修改的集合，其字符串集与注释相同。如果类没有如此注释，则返回一个空集。
+     * <p>
+     * 如果{@linkplain ProcessingEnvironment#getSourceVersion()}不支持模块，
+     * 换句话说，如果它小于或等于{@link SourceVersion#RELEASE_8 RELEASE_8}，
+     * 那么任何前导的{@linkplain Processor#getSupportedAnnotationTypes()}都会从名称中删除。
      *
-     * @return Set
+     * @return 此处理器支持的注释接口的名称，如果没有，则为空集.
      */
     protected abstract Set<String> getAnnotationTypes();
 
