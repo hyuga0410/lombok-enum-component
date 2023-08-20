@@ -33,12 +33,12 @@ import java.util.Set;
 public abstract class AgentProcessor extends AbstractProcessor {
 
     /**
-     * 提供tree的实现。
+     * 提供tree的实现。<br>
      * 这不是任何受支持的API的一部分。如果您编写的代码依赖于此，那么您将自担风险。本代码及其内部接口可随时更改或删除，恕不另行通知。
      */
     protected JavacTrees javacTrees;
     /**
-     * tree的工厂类。
+     * tree的工厂类。<br>
      * 这不是任何受支持的API的一部分。如果您编写的代码依赖于此，那么您将自担风险。本代码及其内部接口可随时更改或删除，恕不另行通知。
      */
     protected TreeMaker treeMaker;
@@ -160,7 +160,7 @@ public abstract class AgentProcessor extends AbstractProcessor {
     public static void addOpensForAgent() {
         Class<?> cModule;
         try {
-            cModule = Class.forName("java.lang.Module");
+            cModule = Class.forName(EnumConstants.JAVA_LANG_MODULE);
         } catch (ClassNotFoundException e) {
             return;
         }
@@ -182,7 +182,7 @@ public abstract class AgentProcessor extends AbstractProcessor {
         };
 
         try {
-            Method m = cModule.getDeclaredMethod("implAddOpens", String.class, cModule);
+            Method m = cModule.getDeclaredMethod(EnumConstants.IMPL_ADD_OPENS, String.class, cModule);
             assert unsafe != null;
             long firstFieldOffset = getFirstFieldOffset(unsafe);
             unsafe.putBooleanVolatile(m, firstFieldOffset, true);
@@ -196,7 +196,7 @@ public abstract class AgentProcessor extends AbstractProcessor {
 
     private static long getFirstFieldOffset(Unsafe unsafe) {
         try {
-            return unsafe.objectFieldOffset(Parent.class.getDeclaredField("first"));
+            return unsafe.objectFieldOffset(Parent.class.getDeclaredField(EnumConstants.FIRST));
         } catch (NoSuchFieldException e) {
             // can't happen.
             throw new RuntimeException(e);
@@ -208,7 +208,7 @@ public abstract class AgentProcessor extends AbstractProcessor {
 
     private static Unsafe getUnsafe() {
         try {
-            Field theUnsafe = Unsafe.class.getDeclaredField("theUnsafe");
+            Field theUnsafe = Unsafe.class.getDeclaredField(EnumConstants.THE_UNSAFE);
             theUnsafe.setAccessible(true);
             return (Unsafe) theUnsafe.get(null);
         } catch (Exception e) {
@@ -221,13 +221,13 @@ public abstract class AgentProcessor extends AbstractProcessor {
      */
     public static Object getJdkCompilerModule() {
         try {
-            Class<?> cModuleLayer = Class.forName("java.lang.ModuleLayer");
-            Method mBoot = cModuleLayer.getDeclaredMethod("boot");
+            Class<?> cModuleLayer = Class.forName(EnumConstants.JAVA_LANG_MODULE_LAYER);
+            Method mBoot = cModuleLayer.getDeclaredMethod(EnumConstants.BOOT);
             Object bootLayer = mBoot.invoke(null);
-            Class<?> cOptional = Class.forName("java.util.Optional");
-            Method mFindModule = cModuleLayer.getDeclaredMethod("findModule", String.class);
-            Object oCompilerO = mFindModule.invoke(bootLayer, "jdk.compiler");
-            return cOptional.getDeclaredMethod("get").invoke(oCompilerO);
+            Class<?> cOptional = Class.forName(EnumConstants.JAVA_UTIL_OPTIONAL);
+            Method mFindModule = cModuleLayer.getDeclaredMethod(EnumConstants.FIND_MODULE, String.class);
+            Object oCompilerO = mFindModule.invoke(bootLayer, EnumConstants.JDK_COMPILER);
+            return cOptional.getDeclaredMethod(EnumConstants.GET).invoke(oCompilerO);
         } catch (Exception e) {
             return null;
         }
